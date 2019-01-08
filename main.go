@@ -19,16 +19,19 @@ type File struct {
 	Status   string `json:"status"`
 }
 
-const maxRequestSize = 60 * 1024 * 1024 // 60 mb
-const maxUploadSize = 1 * 1024 * 1024   // 9 mb
-const uploadPath = "/files/"
-const host = "localhost:8081"
+const (
+	maxRequestSize = 60 * 1024 * 1024 // 60 Mb
+	maxUploadSize  = 9 * 1024 * 1024  // 9 Mb
+	uploadPath     = "/files/"
+	host           = "localhost:8081"
+	domain         = host
+)
 
 func main() {
 	http.Handle(uploadPath, http.StripPrefix(uploadPath, http.FileServer(http.Dir("."+uploadPath))))
 
 	http.HandleFunc("/upload", uploadFileHandler())
-	log.Print("Server started on " + host + "...")
+	log.Print("Server started on " + host + " ...")
 	log.Fatal(http.ListenAndServe(host, nil))
 }
 
@@ -63,16 +66,16 @@ func uploadFileHandler() http.HandlerFunc {
 			return
 		}
 		defer file.Close()
-
 		origFile.NameFile = handle.Filename
+
 		origFile.Mime = handle.Header.Get("Content-Type")
-		log.Println("Type file:", origFile.Mime)
 		switch origFile.Mime {
 		case "image/jpeg", "image/jpg", "image/gif", "image/png":
 			saveFile(w, file, origFile)
 		case "application/pdf", "application/msword":
 			saveFile(w, file, origFile)
 		default:
+			log.Println("Type file:", origFile.Mime)
 			Response(w, http.StatusCreated, "Invalid file type", origFile)
 			return
 		}
@@ -101,7 +104,7 @@ func saveFile(w http.ResponseWriter, file multipart.File, ofile File) {
 		log.Println("Err!", err)
 		return
 	}
-	ofile.URL = "http://" + host + "/" + ofile.PathFile + "/" + ofile.NameFile
+	ofile.URL = "http://" + host + ofile.PathFile + ofile.NameFile
 	Response(w, http.StatusCreated, "Success", ofile)
 }
 
@@ -114,6 +117,5 @@ func Response(w http.ResponseWriter, code int, message string, of File) {
 		return
 	}
 	w.WriteHeader(code)
-	log.Println(code)
 	w.Write([]byte(jsonData))
 }
