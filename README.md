@@ -2,7 +2,8 @@
 Easy http file server that allows to upload/download files.
 You can send files using different ways.
 
-##First
+## First
+
 Use *curl* command
 
 * Request:
@@ -23,7 +24,8 @@ curl -F "uploadFile=@/my/dir/image.jpeg" -F "pathFile=test" http://localhost:808
 
 ```
 
-##Second
+## Second
+
 From html form
 
 ```html
