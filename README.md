@@ -4,9 +4,15 @@ For images server can create thumbnail on default size 300x200.
 
 You can send files using different ways.
 
+<<<<<<< HEAD
 ### First
 
 Use *curl* command:
+=======
+## First
+
+Use *curl* command
+>>>>>>> 32dcc7bb1a0bd4bdf1325efab3c7426b045d5cc7
 
 ```shell
 curl -F "uploadFile=@/my/dir/image.jpeg" -F "pathFile=test" http://localhost:8081/upload
@@ -14,7 +20,13 @@ curl -F "uploadFile=@/my/dir/image.jpeg" -F "pathFile=test" http://localhost:808
 
 ### Second
 
+<<<<<<< HEAD
 From html form:
+=======
+## Second
+
+From html form
+>>>>>>> 32dcc7bb1a0bd4bdf1325efab3c7426b045d5cc7
 
 ```html
 <form enctype="multipart/form-data" action="http://127.0.0.1:8081/upload" method="post">
@@ -23,6 +35,7 @@ From html form:
     <input type="submit" value="upload" />
 </form>
 ```
+<<<<<<< HEAD
 
 ### Response on request in JSON format:
 
@@ -44,3 +57,5 @@ From html form:
 }
 ```
 
+=======
+>>>>>>> 32dcc7bb1a0bd4bdf1325efab3c7426b045d5cc7
